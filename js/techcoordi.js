@@ -37,19 +37,19 @@ document.addEventListener("DOMContentLoaded", function() {
       const email = document.createElement('a');
       email.classList.add('favicon')
       email.href = `mailto:${user.email}`;
-      email.innerHTML = `<img width="${faviconSize}" src="../assets/favicons/mail.png"">`;
+      email.innerHTML = `<img width="${faviconSize}" src="../favicons/mail.png"">`;
       
       // Phone 
       const phone = document.createElement('a');
       phone.classList.add('favicon')
       phone.href = `tel:+91${user.tele}`;
-      phone.innerHTML = `<img width="${faviconSize}" src="../assets/favicons/tele.png"">`;
+      phone.innerHTML = `<img width="${faviconSize}" src="../favicons/tele.png"">`;
 
       // Linekdin
       const linkedin = document.createElement('a');
       linkedin.classList.add('favicon')
       linkedin.href = user.linkedin
-      linkedin.innerHTML = `<img width="${faviconSize}" src="../assets/favicons/linkedin.png"">`;
+      linkedin.innerHTML = `<img width="${faviconSize}" src="../favicons/linkedin.png"">`;
 
       // Append social elements to social div
       socials.append(email, phone, linkedin)

@@ -1,21 +1,23 @@
 document.addEventListener("DOMContentLoaded", function() {
   const noticeList = document.querySelector('.noticeList');
   const noticeDetails = document.querySelector('.notice-details');
+  const parser = new DOMParser();
+  const noticesDir = "./notices"
 
-  // Fetch notices from files
-  fetchNotices();
+  fetch(noticesDir)
+  .then(response => response.text())
+  .then(data => {
+    // Fetch the list of files in the notices folder
+    const doc = parser.parseFromString(data, 'text/html');
+    const links = Array.from(doc.querySelectorAll('a'));
+    const files = links.map(link => link.getAttribute('href'));
 
-  async function fetchNotices() {
+    // Fetch notices from files
+    fetchNotices(files);
+  });
+
+  function fetchNotices(files) {
     try {
-      // Fetch the list of files in the notices folder
-      noticesDir = "notices"
-      const response = await fetch(noticesDir);
-      const data = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(data, 'text/html');
-      const links = Array.from(doc.querySelectorAll('a'));
-      const files = links.map(link => link.getAttribute('href'));
-
       // Count the number of files
       const noticesCount = files.length;
 
@@ -34,34 +36,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // Fetch notices based on the count
       for (let i = noticesCount; i > bound; i--) {
-        const file = `${noticesDir}/${i}.html`;
-        const response = await fetch(file);
-        const data = await response.text();
-        const htmlDocument = parser.parseFromString(data, 'text/html');
-        const title = htmlDocument.querySelector('title').textContent;
-        const timestamp = htmlDocument.querySelector('time').textContent;
-        const body = htmlDocument.querySelector('body').textContent.split('\n').slice(5).join('\n').trim();
-        
-        // Create a notice element
-        const noticeElement = document.createElement('div');
-        noticeElement.classList.add('notice');
-        noticeElement.innerHTML = `
-          <h3>${title}</h3>
-          <h5>${timestamp}</h5>
-        `;
-        
-        // Add click event listener to show notice details
-        noticeElement.addEventListener('click', () => {
-          const prevNotice = document.getElementById('notice-clicked');
-          if (prevNotice != null) {
-            prevNotice.id = "";
-          }
-          noticeElement.id = "notice-clicked";
-          showNoticeDetails(title, body, timestamp);
-        });
+        fetch(`${noticesDir}/${i}.html`)
+        .then(response => response.text())
+        .then(data => {
+          const htmlDocument = parser.parseFromString(data, 'text/html');
+          const title = htmlDocument.querySelector('title').textContent;
+          const timestamp = htmlDocument.querySelector('time').textContent;
+          const body = htmlDocument.querySelector('body').textContent.split('\n').slice(5).join('\n').trim();
+          
+          // Create a notice element
+          const noticeElement = document.createElement('div');
+          noticeElement.classList.add('notice');
+          noticeElement.innerHTML = `
+            <h3>${title}</h3>
+            <h5>${timestamp}</h5>
+          `;
+          
+          // Add click event listener to show notice details
+          noticeElement.addEventListener('click', () => {
+            const prevNotice = document.getElementById('notice-clicked');
+            if (prevNotice != null) {
+              prevNotice.id = "";
+            }
+            noticeElement.id = "notice-clicked";
+            showNoticeDetails(title, body, timestamp);
+          });
 
-        // Append notice to notices container
-        noticeList.appendChild(noticeElement);
+          // Append notice to notices container
+          noticeList.appendChild(noticeElement);
+        });
       }
     } catch (error) {
       console.error('Error fetching notices:', error);

@@ -1,0 +1,16 @@
+# Related to git and github
+.git/
+.github/
+.gitignore
+LICENSE
+README.md
+
+# Things of projects which doesn't concern the dockerfile at all
+.env
+.env.example
+create-notice.py
+
+# To be mounted
+notices/
+assets/*.png
+techcoordi.json
