@@ -45,10 +45,14 @@ def parse_notice_to_html(title, notice):
 # Genereate new filename
 def generate_file_seq():
   notices_folder = "./notices"
+
   notice_files = os.listdir(notices_folder)
-  notice_files.sort(key=lambda x: int(x.split('.')[0]))
-  latest_notice_file = notice_files[-1]
-  latest_notice_seq = os.path.splitext(latest_notice_file)[0]
+  if len(notice_files) != 0:
+    notice_files.sort(key=lambda x: int(x.split('.')[0]))
+    latest_notice_file = notice_files[-1]
+    latest_notice_seq = os.path.splitext(latest_notice_file)[0]
+  else:
+    latest_notice_seq = 0
 
   return int(latest_notice_seq) + 1
 
@@ -59,7 +63,7 @@ def main():
   file_seq = generate_file_seq()
 
   # Write HTML content to a file
-  with open(f"./notices/00{file_seq}.html", "w") as file:
+  with open(f"./notices/00000{file_seq}.html", "w") as file:
       file.write(html_notice)
 
   print("HTML file generated successfully.")
