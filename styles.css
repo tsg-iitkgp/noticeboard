@@ -39,6 +39,19 @@ body {
   font-weight: bolder;
 }
 
+/* Footer styles */
+.footer a:link {
+  color: white;
+}
+
+.footer a:visited {
+  color: white;
+}
+
+.footer a:hover {
+  color: rgb(100, 160, 255);
+}
+
 /* Overwriting Footer styles */
 .footer {
   height: 3vh;
