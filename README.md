@@ -32,17 +32,18 @@
 <summary>Table of Contents</summary>
 
 - [About The Project](#about-the-project)
-- [Serving the static site](#serving-the-static-site)
+- [Serving The Static Site](#serving-the-static-site)
 - [Creating Notices](#creating-notices)
+    - [Syncing With Server](#syncing-with-server)
 - [Contact](#contact)
     - [Present Technology Coordinator(s)](#present-technology-coordinators)
-- [Additional documentation](#additional-documentation)
+- [Additional Documentation](#additional-documentation)
 
 </details>
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## About the project
 <!-- UPDATE -->
 <div align="center">
   <a href="https://github.com/tsg-iitkgp/noticeboard">
@@ -63,7 +64,7 @@ Use any webserver to host the files in this repository. Following are the quite 
 
 > [!Note]
 > We use [nginx](https://www.nginx.com/) in the docker container.<br>
-> Configuration file nginx: [nginx.conf](./nginx.conf).
+> Configuration file for nginx: [nginx.conf](./nginx.conf).
 
 1. Update details of __Present Technology Coordinator(s)__. 
     - Save pictures in `./assets` with roll number as the file name. For example:
@@ -89,9 +90,11 @@ Use any webserver to host the files in this repository. Following are the quite 
 3. Visit `http://localhost:8001/`
 
 > [!Note]
-> Alternatively run `python -m http.server 8001` to serve the files instead of docker or nginx
+> Alternatively you can run `python3 -m http.server 8001` to serve the files instead of docker or nginx
 
-## Creating Notices
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Creating notices
 
 Make sure you have `python` installed. Once that is verified, follow the steps below:
 
@@ -157,7 +160,7 @@ Name|Email|Phone No.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Additional documentation
+## Additional Documentation
 
   - [License](/LICENSE)
   - [Code of Conduct](/.github/CODE_OF_CONDUCT.md)
