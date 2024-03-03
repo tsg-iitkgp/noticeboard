@@ -10,7 +10,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Fetch the list of files in the notices folder
     const doc = parser.parseFromString(data, 'text/html');
     const links = Array.from(doc.querySelectorAll('a'));
-    const files = links.map(link => link.getAttribute('href'));
+    const files = links
+      .filter(link => !link.getAttribute('href').includes("../") && !link.getAttribute('href').includes("./"))
+      .map(link => link.getAttribute('href'));
 
     // Fetch notices from files
     fetchNotices(files);

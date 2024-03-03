@@ -18,7 +18,7 @@
 
   <p align="center">
   <!-- UPDATE -->
-    <i>All official updates regarding tech facilities in IITKGP</i>
+    <i>Official updates regarding tech facilities of IIT Kharagpur</i>
     <br />
     <a href="https://github.com/tsg-iitkgp/noticeboard/issues">Report Bug</a>
     ·
