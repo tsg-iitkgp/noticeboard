@@ -1,5 +1,8 @@
 import os
+import argparse
+import subprocess
 from datetime import datetime
+from dotenv import load_dotenv
 
 # Take input for title and body content
 def get_notice_content():
@@ -60,15 +63,57 @@ def generate_file_seq():
   return int(latest_notice_seq) + 1
 
 
+# CLI argument parsing
+def parse_args():
+  parser = argparse.ArgumentParser(description='Genereate notices in required format')
+  parser.add_argument('--sync', action="store_true", help='Sync the notices folder with the server', required=False)
+  args = parser.parse_args()
+
+  return args
+
+
 def main():
   title, notice = get_notice_content()
   html_notice = parse_notice_to_html(title, notice)
   file_seq = generate_file_seq()
+  notices_dir = "notices"
 
   # Write HTML content to a file
-  with open(f"./notices/00000{file_seq}.html", "w") as file:
+  with open(f"{notices_dir}/00000{file_seq}.html", "w") as file:
       file.write(html_notice)
-
   print("HTML file generated successfully.")
 
-main()
+  args = parse_args()
+  if args.sync:
+    # Load environment variables
+    load_dotenv() 
+    SERVER_USERNAME = os.getenv('SERVER_USERNAME')
+    SERVER_IP = os.getenv('SERVER_IP')
+    SERVER_DIR = os.getenv('SERVER_DIR')
+    SERVER_PASSWORD = os.getenv('SERVER_PASSWORD')
+    
+    # Construct rsync command
+    if SERVER_PASSWORD:
+      rsync_cmd = [
+        'rsync', '-avzi', 
+        f'{notices_dir}/',
+        '-e', 
+        f'sshpass -p {SERVER_PASSWORD} ssh {SERVER_USERNAME}@{SERVER_IP}:{SERVER_DIR}'
+      ]
+    else:
+      rsync_cmd = [
+        'rsync', '-avzi', 
+        f'{notices_dir}/', 
+        f'{SERVER_USERNAME}@{SERVER_IP}:{SERVER_DIR}'
+      ]
+
+    # Execute rsync subprocess  
+    process = subprocess.run(rsync_cmd)
+    
+    if process.returncode == 0:
+      print("Sync successful")
+    else:
+      print("Sync failed")
+
+if __name__ == "__main__":
+  main()
