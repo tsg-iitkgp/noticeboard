@@ -79,7 +79,7 @@ def main():
   notices_dir = "notices"
 
   # Write HTML content to a file
-  with open(f"{notices_dir}/00000{file_seq}.html", "w") as file:
+  with open(f"{notices_dir}/{file_seq}.html", "w") as file:
       file.write(html_notice)
   print("HTML file generated successfully.")
 

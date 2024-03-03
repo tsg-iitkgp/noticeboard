@@ -5,46 +5,43 @@ document.addEventListener("DOMContentLoaded", function() {
   // Fetch notices from files
   fetchNotices();
 
-  function fetchNotices() {
-    noticesDir = './notices'
-    fetchNoticesFromFolder(noticesDir)
-      .then(files => {
-        if (files.length != 0) {
-          noNoticeText = document.getElementById('no-notice')
-          noNoticeText.style.display = "none"
-        }
+  async function fetchNotices() {
+    try {
+      // Fetch the list of files in the notices folder
+      noticesDir = "notices"
+      const response = await fetch(noticesDir);
+      const data = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(data, 'text/html');
+      const links = Array.from(doc.querySelectorAll('a'));
+      const files = links.map(link => link.getAttribute('href'));
 
-        files.forEach(file => {
-          fetchNotice(`./notices/${file}`);
-        });
-      })
-      .catch(error => console.error('Error fetching notices:', error));
-  }
+      // Count the number of files
+      const noticesCount = files.length;
 
-  async function fetchNoticesFromFolder(folderPath) {
-    const response = await fetch(folderPath);
-    const data = await response.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(data, 'text/html');
-    const links = Array.from(doc.querySelectorAll('a'));
-    // Extract filenames and sort them numerically
-    const files = links.map(link => link.getAttribute('href')).sort((a, b) => {
-      const numA = parseInt(a.split('.')[0]);
-      const numB = parseInt(b.split('.')[0]);
-      return numB - numA;
-    });
-    return files;
-  }
+      // Toggle no notices available message
+      if (noticesCount != 0) {
+        noNoticeText = document.getElementById('no-notice')
+        noNoticeText.style.display = "none"
+      }
 
-  function fetchNotice(file) {
-    fetch(file)
-      .then(response => response.text())
-      .then(data => {
-        const parser = new DOMParser();
+      // Display only latest $limit messages
+      limit = 50
+      bound = noticesCount - limit
+      if (bound < 0) {
+        bound = 0
+      }
+
+      // Fetch notices based on the count
+      for (let i = noticesCount; i > bound; i--) {
+        const file = `${noticesDir}/${i}.html`;
+        const response = await fetch(file);
+        const data = await response.text();
         const htmlDocument = parser.parseFromString(data, 'text/html');
         const title = htmlDocument.querySelector('title').textContent;
         const timestamp = htmlDocument.querySelector('time').textContent;
         const body = htmlDocument.querySelector('body').textContent.split('\n').slice(5).join('\n').trim();
+        
         // Create a notice element
         const noticeElement = document.createElement('div');
         noticeElement.classList.add('notice');
@@ -52,22 +49,23 @@ document.addEventListener("DOMContentLoaded", function() {
           <h3>${title}</h3>
           <h5>${timestamp}</h5>
         `;
+        
         // Add click event listener to show notice details
         noticeElement.addEventListener('click', () => {
-          // Manipulating Id to display clicked or not
-          prevNotice = document.getElementById('notice-clicked')
+          const prevNotice = document.getElementById('notice-clicked');
           if (prevNotice != null) {
-            prevNotice.id = ""
+            prevNotice.id = "";
           }
-          noticeElement.id = "notice-clicked"
-
-          // Display the notice
+          noticeElement.id = "notice-clicked";
           showNoticeDetails(title, body, timestamp);
         });
+
         // Append notice to notices container
         noticeList.appendChild(noticeElement);
-      })
-      .catch(error => console.error(`Error fetching notice ${i}:`, error));
+      }
+    } catch (error) {
+      console.error('Error fetching notices:', error);
+    }
   }
 
   function showNoticeDetails(title, body, timestamp) {
