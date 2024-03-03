@@ -13,9 +13,6 @@ document.addEventListener("DOMContentLoaded", function() {
           noNoticeText.style.display = "none"
         }
 
-        // Sort the files alphabetically, latest notice first
-        files.sort().reverse();
-
         files.forEach(file => {
           fetchNotice(`./notices/${file}`);
         });
@@ -29,7 +26,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const parser = new DOMParser();
     const doc = parser.parseFromString(data, 'text/html');
     const links = Array.from(doc.querySelectorAll('a'));
-    return links.map(link => link.getAttribute('href'));
+    // Extract filenames and sort them numerically
+    const files = links.map(link => link.getAttribute('href')).sort((a, b) => {
+      const numA = parseInt(a.split('.')[0]);
+      const numB = parseInt(b.split('.')[0]);
+      return numB - numA;
+    });
+    return files;
   }
 
   function fetchNotice(file) {
@@ -67,8 +70,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function showNoticeDetails(title, body, timestamp) {
-    console.log(body)
-    
     noticeDetails.innerHTML = `
       <h2>${title}</h2>
       <hr>
