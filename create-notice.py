@@ -45,6 +45,9 @@ def parse_notice_to_html(title, notice):
 # Genereate new filename
 def generate_file_seq():
   notices_folder = "./notices"
+  # Check if folder exists, create if not
+  if not os.path.exists(notices_folder):
+      os.makedirs(notices_folder)
 
   notice_files = os.listdir(notices_folder)
   if len(notice_files) != 0:

@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
   fetchNotices();
 
   function fetchNotices() {
-    fetchNoticesFromFolder('./notices')
+    noticesDir = './notices'
+    fetchNoticesFromFolder(noticesDir)
       .then(files => {
         if (files.length != 0) {
           noNoticeText = document.getElementById('no-notice')
