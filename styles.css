@@ -7,7 +7,7 @@
   /* Shades of grey for text */
   --dark-grey: #292929;
   --medium-dark-grey: #505050;
-  --light-grey: #3b3b3b;
+  --light-grey: #999999;
 }
 
 /* Reset default margin and padding */
@@ -119,7 +119,7 @@ body {
 
 #notice-clicked,
 .notice:hover {
-  background-color: var(--alternate-accent-grey);
+  background-color: var(--light-grey);
   transform: scale(1.05);
   cursor: pointer;
 }
@@ -127,6 +127,7 @@ body {
 #notice-clicked {
   transform: scale(1);
   cursor: default;
+  background-color: var(--alternate-accent-grey);
 }
 
 /* Notice Details styles */
@@ -171,6 +172,6 @@ body {
 
 .notice-details h5 {
   margin-top: 0.5rem;
-  color: var(--light-grey);
+  color: var(--dark-grey);
   text-align: right;
 }
