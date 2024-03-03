@@ -47,7 +47,7 @@
 <!-- UPDATE -->
 <div align="center">
   <a href="https://github.com/tsg-iitkgp/noticeboard">
-    <img width="80%" alt="image" src="https://user-images.githubusercontent.com/86282911/206632547-a3b34b47-e7ae-4186-a1e6-ecda7ddb38e6.png">
+    <img width="80%" alt="image" src="https://github.com/tsg-iitkgp/noticeboard/assets/86282911/1406d02e-45d6-4151-9992-728eec82e4d4">
   </a>
 </div>
 
