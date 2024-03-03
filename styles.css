@@ -85,7 +85,7 @@ body {
   position: relative;
 }
 
-.no-notice {
+#no-notice {
   position: absolute;
   top: 50%;
   left: 50%;

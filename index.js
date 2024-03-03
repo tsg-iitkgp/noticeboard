@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", function() {
   function fetchNotices() {
     fetchNoticesFromFolder('./notices')
       .then(files => {
+        if (files.length != 0) {
+          noNoticeText = document.getElementById('no-notice')
+          noNoticeText.style.display = "none"
+        }
+
         // Sort the files alphabetically, latest notice first
         files.sort().reverse();
 
