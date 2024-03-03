@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", function() {
   function fetchNotices() {
     fetchNoticesFromFolder('./notices')
       .then(files => {
+        // Sort the files alphabetically, latest notice first
+        files.sort().reverse();
+
         files.forEach(file => {
           fetchNotice(`./notices/${file}`);
         });
