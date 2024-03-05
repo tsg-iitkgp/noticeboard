@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
             prevNotice.id = "";
           }
           noticeElement.id = "notice-clicked";
-          showNoticeDetails(title, body, timestamp);
+          showNoticeDetails(title, body, timestamp, i);
         });
 
         // Append notice to notices container
@@ -72,9 +72,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  function showNoticeDetails(title, body, timestamp) {
+  function showNoticeDetails(title, body, timestamp, noticeIndex) {
     noticeDetails.innerHTML = `
-      <h2>${title}</h2>
+      <h2>${title} <a href="../notices/${noticeIndex}.html" target="_blank"><img width="25px" src="../favicons/share.png"></a></h2>
       <hr>
       <p>
         <pre>${body}</pre>
