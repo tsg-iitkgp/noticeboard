@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const htmlDocument = parser.parseFromString(data, 'text/html');
         const title = htmlDocument.querySelector('h2').textContent;
         const timestamp = htmlDocument.querySelector('h5').textContent;
-        const body = htmlDocument.querySelector('pre').textContent.split('\n').slice(5).join('\n').trim();
+        const body = htmlDocument.querySelector('pre').textContent;
         
         // Create a notice element
         const noticeElement = document.createElement('div');
