@@ -29,17 +29,46 @@ def parse_notice_to_html(title, notice):
   # Generate current time
   current_time = datetime.now().strftime("%b %d, %Y | %H:%M")
 
-  html_notice = f""" <title>
-{title}
-</title>
+  html_notice = f"""<!DOCTYPE html>
+<html>
 
-<time>
-{current_time}
-</time>
+<head>
+  <title>{title}</title>
+  <link rel="stylesheet" href="../css/styles.css">  
+  <link rel="stylesheet" href="../css/noticedetails.css">  
+  <style>
+    body {{
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }}
+    .notice-details {{
+      width: 90vw;
+    }}
+  </style>
+</head>
 
 <body>
+  <div class="notice-details">
+    <h2>{title}</h2>
+    <hr>
+    <p>
+      <pre>
 {notice}
+      </pre>
+    </p>
+    <hr>
+    <h5>{current_time}</h5>
+  </div>
+
+  <div class="footer">
+    <pre>Maintained by <a href="../pages/techcoordi.html" target="_blank">Technology Coordinators(s), Technology Students' Gymkhana, IIT Kharagpur</a></pre>
+  </div>
 </body>
+</html>
 """
 
   return html_notice

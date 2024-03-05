@@ -42,9 +42,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const response = await fetch(file);
         const data = await response.text();
         const htmlDocument = parser.parseFromString(data, 'text/html');
-        const title = htmlDocument.querySelector('title').textContent;
-        const timestamp = htmlDocument.querySelector('time').textContent;
-        const body = htmlDocument.querySelector('body').textContent.split('\n').slice(5).join('\n').trim();
+        const title = htmlDocument.querySelector('h2').textContent;
+        const timestamp = htmlDocument.querySelector('h5').textContent;
+        const body = htmlDocument.querySelector('pre').textContent.split('\n').slice(5).join('\n').trim();
         
         // Create a notice element
         const noticeElement = document.createElement('div');
