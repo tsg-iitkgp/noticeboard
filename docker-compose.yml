@@ -1,9 +1,10 @@
-version: '3.8'
+version: '3'
 
 services:
   noticeboard:
     image: proffapt/noticeboard
     container_name: noticeboard
+    restart: unless-stopped
     ports:
       - 8001:8001
     volumes:
