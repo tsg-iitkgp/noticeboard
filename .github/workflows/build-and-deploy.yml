@@ -1,0 +1,17 @@
+name: Build and Deploy Technology Noticeboard Site
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  invoke-cicd-pipeline:
+    name: Calls cicd pipeline endpoint for Technology Noticeboard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install curl
+        run: sudo apt-get update && sudo apt-get install -y curl
+      - name: Curl Command
+        env: 
+          AUTH_TOKEN: ${{ secrets.CICD_AUTH_TOKEN }}
+        run: curl "http://tsg-cicd.iitkgp.ac.in/tech-notice/$AUTH_TOKEN"
+
