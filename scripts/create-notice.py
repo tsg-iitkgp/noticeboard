@@ -75,8 +75,7 @@ def parse_notice_to_html(title, notice):
 
 
 # Genereate new filename
-def generate_file_seq():
-  notices_folder = "./notices"
+def generate_file_seq(notices_folder):
   # Check if folder exists, create if not
   if not os.path.exists(notices_folder):
       os.makedirs(notices_folder)
@@ -104,8 +103,9 @@ def parse_args():
 def main():
   title, notice = get_notice_content()
   html_notice = parse_notice_to_html(title, notice)
-  file_seq = generate_file_seq()
-  notices_dir = "notices"
+  
+  notices_dir = "../notices"
+  file_seq = generate_file_seq(notices_dir)
 
   # Write HTML content to a file
   with open(f"{notices_dir}/{file_seq}.html", "w") as file:

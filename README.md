@@ -100,6 +100,7 @@ Make sure you have `python` installed. Once that is verified, follow the steps b
 
 1. Run the `create-notice.py` script
     ```sh
+    cd scripts/
     python3 create-notice.py
     ```
 2. Enter the title in the prompt
@@ -109,7 +110,8 @@ Make sure you have `python` installed. Once that is verified, follow the steps b
 
 #### Syncing with server
 
-1. Configure the environment variables. 
+1. Move to `./scripts/` directory
+2. Configure the environment variables. 
     - Copy `.env.example` as `.env`
     - Fill the following self-explanatory template
       ```env
@@ -119,11 +121,11 @@ Make sure you have `python` installed. Once that is verified, follow the steps b
       SERVER_PASSWORD=mysecretpassword 
       # Leave SERVER_PASSWORD empty if SSH through SSH keys is configured
       ```
-2. Run the `create-notice.py` script with `--sync` argument
+3. Run the `create-notice.py` script with `--sync` argument
     ```sh
     python3 create-notice.py --sync
     ```
-3. Follow steps 2-5 of [Creating Notices](#creating-notices)
+4. Follow steps 2-5 of [Creating Notices](#creating-notices)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
