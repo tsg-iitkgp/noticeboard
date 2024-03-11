@@ -8,8 +8,6 @@ jobs:
     name: Calls cicd pipeline endpoint for Technology Noticeboard
     runs-on: ubuntu-latest
     steps:
-      - name: Install curl
-        run: sudo apt-get update && sudo apt-get install -y curl
       - name: Curl Command
         env: 
           AUTH_TOKEN: ${{ secrets.CICD_AUTH_TOKEN }}
